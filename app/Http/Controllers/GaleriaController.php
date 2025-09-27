@@ -39,7 +39,7 @@ public function index()
         $file = $request->file('ruta'); // asegúrate que el input tenga name="ruta"
         $filename = time() . '_' . $file->getClientOriginalName();
         $ruta = $file->storeAs('imagenes', $filename, 'public');
-        $rutaImagen = 'storage/' . $ruta;
+        $rutaImagen = $ruta; // Guardar solo la ruta relativa, no con 'storage/'
     }
 
     // Crear la imagen con los datos, incluyendo la ruta si se subió
@@ -81,7 +81,7 @@ public function index()
         $file = $request->file('nueva_ruta');
         $filename = time() . '_' . $file->getClientOriginalName();
         $ruta = $file->storeAs('imagenes', $filename, 'public');
-        $datos['ruta'] = 'storage/' . $ruta;
+        $datos['ruta'] = $ruta; // Guardar solo la ruta relativa, no con 'storage/'
     }
 
     $imagen->update($datos);

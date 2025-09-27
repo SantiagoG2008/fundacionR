@@ -46,7 +46,7 @@
             <th>Tratamiento</th>
             <th>Observaciones</th>
             <th>Cuidados</th>
-            </tr>y
+            </tr>
         </thead>
         <tbody>
             @foreach($historias as $h)

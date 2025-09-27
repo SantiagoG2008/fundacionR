@@ -28,18 +28,25 @@ class MascotaController extends Controller
         $data = $request->validate([
             'nombre_mascota' => 'required|string|max:255',
             'edad' => 'required|integer',
-            'vacunado' => 'required|boolean',
-            'peligroso' => 'required|boolean',
-            'esterilizado' => 'required|boolean',
-            'destetado' => 'required|boolean',
+            'vacunado' => 'required|in:0,1',
+            'peligroso' => 'required|in:0,1',
+            'esterilizado' => 'required|in:0,1',
+            'destetado' => 'required|in:0,1',
             'genero' => 'required|string|max:10',
             'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'crianza' => 'required|boolean',
+            'crianza' => 'required|in:0,1',
             'fecha_ingreso' => 'required|date',
             'estado_id' => 'required|exists:estados,id_estado',
             'nombre_raza' => 'required|string|max:100',
             'descripcion_condicion' => 'nullable|string',
         ]);
+
+        // Convertir strings a booleanos
+        $data['vacunado'] = (bool) $data['vacunado'];
+        $data['peligroso'] = (bool) $data['peligroso'];
+        $data['esterilizado'] = (bool) $data['esterilizado'];
+        $data['destetado'] = (bool) $data['destetado'];
+        $data['crianza'] = (bool) $data['crianza'];
 
         // Procesar imagen
         if ($request->hasFile('imagen')) {
@@ -79,19 +86,29 @@ class MascotaController extends Controller
         $data = $request->validate([
             'nombre_mascota' => 'required|string|max:255',
             'edad' => 'required|integer',
-            'vacunado' => 'required|boolean',
-            'peligroso' => 'required|boolean',
-            'esterilizado' => 'required|boolean',
-            'destetado' => 'required|boolean',
+            'vacunado' => 'required|in:0,1',
+            'peligroso' => 'required|in:0,1',
+            'esterilizado' => 'required|in:0,1',
+            'destetado' => 'required|in:0,1',
             'genero' => 'required|string|max:10',
             'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'crianza' => 'required|boolean',
+            'crianza' => 'required|in:0,1',
             'fecha_ingreso' => 'required|date',
             'estado_id' => 'required|exists:estados,id_estado',
             'nombre_raza' => 'required|string|max:100',
             'descripcion_condicion' => 'nullable|string',
-            'condiciones_especiales' => 'nullable|boolean',
+            'condiciones_especiales' => 'nullable|in:0,1',
         ]);
+
+        // Convertir strings a booleanos
+        $data['vacunado'] = (bool) $data['vacunado'];
+        $data['peligroso'] = (bool) $data['peligroso'];
+        $data['esterilizado'] = (bool) $data['esterilizado'];
+        $data['destetado'] = (bool) $data['destetado'];
+        $data['crianza'] = (bool) $data['crianza'];
+        if (isset($data['condiciones_especiales'])) {
+            $data['condiciones_especiales'] = (bool) $data['condiciones_especiales'];
+        }
 
         // Imagen nueva
         if ($request->hasFile('imagen')) {

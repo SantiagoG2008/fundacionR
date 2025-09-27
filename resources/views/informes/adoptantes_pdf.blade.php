@@ -55,7 +55,7 @@
         <tbody>
             @foreach ($adoptantes as $adoptante)
                 <tr>
-                    <td>{{ $adoptante->nombres }} {{ $adoptante->apellidos }}</td>
+                    <td>{{ $adoptante->nombres }}</td>
                     <td>{{ $adoptante->nro_docum }}</td>
                     <td>{{ $adoptante->tipoDocumento->nombre_tipo ?? '—' }}</td>
                     <td>{{ $adoptante->edad }}</td>
