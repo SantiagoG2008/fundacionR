@@ -148,8 +148,8 @@
         
         <form action="{{ route('login') }}" method="POST">
             @csrf
-            <input type="text" name="usuario" placeholder="Usuario" value="{{ old('usuario') }}" required>
-            <input type="password" name="contraseña" placeholder="Contraseña" required>
+            <input type="email" name="email" placeholder="Email" value="{{ old('email', 'admin@rescataamor.com') }}" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
             <button type="submit">Entrar</button>
         </form>
         

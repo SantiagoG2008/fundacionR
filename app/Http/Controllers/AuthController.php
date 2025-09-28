@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
@@ -15,26 +16,29 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'usuario' => 'required|string',
-            'contraseña' => 'required|string',
+            'email' => 'required|email',
+            'password' => 'required|string',
         ]);
 
-        // Validación simple con credenciales fijas
-        if ($request->usuario === 'admin' && $request->contraseña === 'admin') {
-            Session::put('authenticated', true);
-            Session::put('user', 'admin');
-            
+        // Usar Laravel Auth para autenticación
+        $credentials = $request->only('email', 'password');
+        
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
             return redirect()->route('admin.dashboard')->with('success', 'Bienvenido al panel administrativo');
         }
 
         return back()->withErrors([
             'credentials' => 'Las credenciales proporcionadas no son correctas.',
-        ])->withInput($request->only('usuario'));
+        ])->withInput($request->only('email'));
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        Session::forget(['authenticated', 'user']);
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
         return redirect()->route('home')->with('success', 'Sesión cerrada correctamente');
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class SimpleAuth
 {
@@ -17,7 +17,7 @@ class SimpleAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Session::has('authenticated')) {
+        if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Debes iniciar sesión para acceder a esta área');
         }
 

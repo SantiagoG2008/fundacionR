@@ -1,5 +1,5 @@
 -- Dump de base de datos para Fundación Rescata Amor
--- Generado el: 2025-09-28 03:22:05
+-- Generado el: 2025-09-28 03:30:16
 
 SET FOREIGN_KEY_CHECKS=0;
 
