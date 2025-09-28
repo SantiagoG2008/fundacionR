@@ -121,9 +121,9 @@
                     <label class="form-label">Sexo *</label>
                     <select name="sexo" class="form-control" required>
                         <option value="">-- Seleccione --</option>
-                        <option value="Masculino" {{ old('sexo') == 'Masculino' ? 'selected' : '' }}>Masculino</option>
-                        <option value="Femenino" {{ old('sexo') == 'Femenino' ? 'selected' : '' }}>Femenino</option>
-                        <option value="Otro" {{ old('sexo') == 'Otro' ? 'selected' : '' }}>Otro</option>
+                        <option value="M" {{ old('sexo') == 'M' ? 'selected' : '' }}>Masculino</option>
+                        <option value="F" {{ old('sexo') == 'F' ? 'selected' : '' }}>Femenino</option>
+                        <option value="O" {{ old('sexo') == 'O' ? 'selected' : '' }}>Otro</option>
                     </select>
                     @error('sexo')
                         <div class="text-danger mt-1">{{ $message }}</div>
