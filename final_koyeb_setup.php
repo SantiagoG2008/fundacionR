@@ -130,4 +130,5 @@ echo "Tu aplicación está lista en: https://gigantic-rosmunda-rescataamor-30581
 echo "Usuario: admin@rescataamor.com\n";
 echo "Password: admin123\n";
 
-$kernel->terminate();
+// Terminar correctamente el kernel
+$kernel->terminate(null, 0);

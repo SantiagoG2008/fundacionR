@@ -49,24 +49,38 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
-            // Solo inicializar DataTables si la tabla tiene datos y estructura correcta
+            // Inicializar DataTables solo en tablas con datos y estructura correcta
             $('table').each(function() {
                 var $table = $(this);
-                var rowCount = $table.find('tbody tr').length;
+                var $tbody = $table.find('tbody');
+                var rowCount = $tbody.find('tr').length;
                 var hasThead = $table.find('thead').length > 0;
-                var hasTbody = $table.find('tbody').length > 0;
+                var hasTbody = $tbody.length > 0;
                 
-                // Solo inicializar si tiene estructura correcta y datos
+                // Verificar que la tabla tenga la estructura mínima requerida
                 if (hasThead && hasTbody && rowCount > 0) {
-                    try {
-                        $table.DataTable({
-                            scrollX: true,
-                            language: {
-                                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
-                            }
-                        });
-                    } catch (e) {
-                        console.log('DataTables no se pudo inicializar para esta tabla:', e);
+                    // Verificar que todas las filas tengan el mismo número de columnas
+                    var expectedCols = $table.find('thead th').length;
+                    var isValidStructure = true;
+                    
+                    $tbody.find('tr').each(function() {
+                        if ($(this).find('td').length !== expectedCols) {
+                            isValidStructure = false;
+                            return false;
+                        }
+                    });
+                    
+                    if (isValidStructure) {
+                        try {
+                            $table.DataTable({
+                                scrollX: true,
+                                language: {
+                                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                                }
+                            });
+                        } catch (e) {
+                            console.log('DataTables no se pudo inicializar:', e.message);
+                        }
                     }
                 }
             });
