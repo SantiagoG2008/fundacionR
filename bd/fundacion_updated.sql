@@ -1,5 +1,5 @@
 -- Dump de base de datos para Fundación Rescata Amor
--- Generado el: 2025-09-28 02:31:26
+-- Generado el: 2025-09-28 02:57:08
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -17,7 +17,7 @@ CREATE TABLE `adopciones` (
   KEY `adopciones_id_adoptante_foreign` (`id_adoptante`),
   CONSTRAINT `adopciones_id_adoptante_foreign` FOREIGN KEY (`id_adoptante`) REFERENCES `adoptantes` (`id_adoptante`) ON DELETE CASCADE,
   CONSTRAINT `adopciones_id_mascota_foreign` FOREIGN KEY (`id_mascota`) REFERENCES `mascota` (`id_mascota`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `adoptantes`;
 CREATE TABLE `adoptantes` (
@@ -43,7 +43,10 @@ CREATE TABLE `adoptantes` (
   CONSTRAINT `adoptantes_id_barrio_foreign` FOREIGN KEY (`id_barrio`) REFERENCES `barrio` (`id_barrio`) ON DELETE CASCADE,
   CONSTRAINT `adoptantes_id_localidad_foreign` FOREIGN KEY (`id_localidad`) REFERENCES `localidad_usu` (`id_localidad`) ON DELETE CASCADE,
   CONSTRAINT `adoptantes_id_tipo_foreign` FOREIGN KEY (`id_tipo`) REFERENCES `tipo_docum` (`id_tipo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `adoptantes` (`id_adoptante`, `nombres`, `telefono`, `direccion`, `edad`, `nro_docum`, `id_tipo`, `correo`, `sexo`, `id_localidad`, `id_barrio`, `rol`, `created_at`, `updated_at`) VALUES
+('1', 'Santiago Godoy', '3053468635', 'cra130#143a13', '22', '1001119500', '1', 'castillogodoysantiago@gmail.com', 'M', '15', '1', 'ambos', NULL, NULL);
 
 DROP TABLE IF EXISTS `barrio`;
 CREATE TABLE `barrio` (
@@ -98,7 +101,10 @@ CREATE TABLE `detalle_donacion` (
   PRIMARY KEY (`id_detalle`),
   KEY `detalle_donacion_id_donacion_foreign` (`id_donacion`),
   CONSTRAINT `detalle_donacion_id_donacion_foreign` FOREIGN KEY (`id_donacion`) REFERENCES `donaciones` (`id_donacion`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `detalle_donacion` (`id_detalle`, `id_donacion`, `descripcion_producto`, `created_at`, `updated_at`) VALUES
+('1', '1', 'sss', '2025-09-28 02:37:21', '2025-09-28 02:37:21');
 
 DROP TABLE IF EXISTS `donaciones`;
 CREATE TABLE `donaciones` (
@@ -112,7 +118,10 @@ CREATE TABLE `donaciones` (
   PRIMARY KEY (`id_donacion`),
   KEY `donaciones_id_adoptante_foreign` (`id_adoptante`),
   CONSTRAINT `donaciones_id_adoptante_foreign` FOREIGN KEY (`id_adoptante`) REFERENCES `adoptantes` (`id_adoptante`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `donaciones` (`id_donacion`, `tipo`, `cantidad`, `fecha`, `id_adoptante`, `created_at`, `updated_at`) VALUES
+('1', 'Comida', '2322.00', '2025-09-27', '1', '2025-09-28 02:37:21', '2025-09-28 02:37:21');
 
 DROP TABLE IF EXISTS `estados`;
 CREATE TABLE `estados` (
