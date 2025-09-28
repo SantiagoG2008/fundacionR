@@ -1,5 +1,5 @@
 -- Dump de base de datos para Fundación Rescata Amor
--- Generado el: 2025-09-28 03:30:16
+-- Generado el: 2025-09-28 03:58:25
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -343,6 +343,9 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+('1', 'Administrador', 'admin@rescataamor.com', NULL, '$2y$10$nSGKkJPJPEZYdp91keGHQ.BNbBW8Ws07kfFdLQmTsJt/K.QSo06pa', NULL, '2025-09-28 03:57:47', '2025-09-28 03:58:20');
 
 SET FOREIGN_KEY_CHECKS=1;
