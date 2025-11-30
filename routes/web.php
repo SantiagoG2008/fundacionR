@@ -5,12 +5,12 @@ use App\Http\Controllers\HistoriaClinicaController;
 use App\Http\Controllers\GaleriaController;
 use App\Http\Controllers\AdopcionController;
 use App\Http\Controllers\AdoptanteController;
-use App\Http\Controllers\DetalleDonacionController;
 use App\Http\Controllers\DonacionesController;
 use App\Http\Controllers\InformeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\Auth\ManualPasswordResetController;
 use Illuminate\Support\Facades\Storage;
 
 // Rutas públicas (frontend)
@@ -29,6 +29,8 @@ Route::get('/canales-donacion', [PublicController::class, 'canalesDonacion'])->n
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/forgot-password', [ManualPasswordResetController::class, 'create'])->name('password.request');
+Route::post('/forgot-password', [ManualPasswordResetController::class, 'store'])->name('password.update.manual');
 
 // Rutas administrativas (protegidas)
 Route::middleware(['simple.auth'])->group(function () {

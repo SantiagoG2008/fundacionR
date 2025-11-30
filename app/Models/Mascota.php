@@ -32,6 +32,10 @@ class Mascota extends Model
         'condicion_id'
     ];
 
+    protected $appends = [
+        'imagen_url',
+    ];
+
     public function raza()
     {
         return $this->belongsTo(Raza::class, 'raza_id', 'id_raza');

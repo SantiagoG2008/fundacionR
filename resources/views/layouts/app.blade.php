@@ -11,7 +11,7 @@
 <body>
     <div id="container">
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="admin-sidebar">
             <div class="sidebar-header">Fundación</div>
             <nav>
                 <a href="{{ route('mascotas.index') }}" class="nav-link">🐾 Mascotas</a>
@@ -25,12 +25,19 @@
             </nav>
         </aside>
 
+        <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
         <!-- Main Content -->
         <main class="content">
             <!-- Header -->
             <header class="admin-header">
                 <div class="header-content">
-                  <center>  <h1>Panel Administrativo - Fundación Rescata Amor</h1></center>
+                    <div class="header-left">
+                        <button class="sidebar-toggle" aria-controls="admin-sidebar" aria-expanded="false">
+                            <span></span>
+                        </button>
+                        <h1>Panel Administrativo - Fundación Rescata Amor</h1>
+                    </div>
                     <div class="header-actions">
                         <a href="{{ route('home') }}" class="btn btn-secondary">Ver sitio público</a>
                         <form action="{{ route('logout') }}" method="POST" style="display: inline;">
@@ -82,6 +89,28 @@
                             console.log('DataTables no se pudo inicializar:', e.message);
                         }
                     }
+                }
+            });
+
+            const toggleButton = document.querySelector('.sidebar-toggle');
+            const sidebar = document.querySelector('#admin-sidebar');
+            const backdrop = document.querySelector('#sidebar-backdrop');
+
+            function closeSidebar() {
+                document.body.classList.remove('sidebar-open');
+                toggleButton?.setAttribute('aria-expanded', 'false');
+            }
+
+            function toggleSidebar() {
+                const isOpen = document.body.classList.toggle('sidebar-open');
+                toggleButton?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            }
+
+            toggleButton?.addEventListener('click', toggleSidebar);
+            backdrop?.addEventListener('click', closeSidebar);
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 992) {
+                    closeSidebar();
                 }
             });
         });

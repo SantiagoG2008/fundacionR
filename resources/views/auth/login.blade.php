@@ -134,24 +134,29 @@
             </div>
         @endif
         
-        @if(session('error'))
+        @if($errors->any())
             <div class="alert alert-error">
-                {{ session('error') }}
+                {{ $errors->first('credentials') ?? $errors->first() }}
             </div>
         @endif
         
-        @if($errors->has('credentials'))
-            <div class="alert alert-error">
-                {{ $errors->first('credentials') }}
+        @if(session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
             </div>
         @endif
-        
+
         <form action="{{ route('login') }}" method="POST">
             @csrf
-            <input type="email" name="email" placeholder="Email" value="{{ old('email', 'admin@rescataamor.com') }}" required>
+            <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
             <input type="password" name="password" placeholder="Contraseña" required>
             <button type="submit">Entrar</button>
         </form>
+
+        <div style="margin-top: 16px; display:flex; flex-direction:column; gap:8px;">
+            <a href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
+            <a href="{{ route('home') }}">Regresar al sitio público</a>
+        </div>
         
     </div>
 </body>

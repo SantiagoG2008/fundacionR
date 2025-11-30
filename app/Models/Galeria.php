@@ -22,6 +22,10 @@ class Galeria extends Model
         'ruta',
     ];
 
+    protected $appends = [
+        'ruta_url',
+    ];
+
     public function mascota()
     {
         return $this->belongsTo(Mascota::class, 'id_mascota');

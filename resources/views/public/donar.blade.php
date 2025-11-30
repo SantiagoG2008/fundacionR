@@ -1,173 +1,101 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donaciones - Fundación Rescata Amor</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Noto+Sans+Hebrew:wght@100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Concert+One&family=Noto+Sans+Hebrew:wght@100..900&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        .fundacion{
-            text-align: center;
-            line-height: 1.3;
-            margin-top: 14px;
-            font-family: "Concert One", sans-serif;
-        }
-        .tit2{
-            font-family: "Bad Script", cursive;
-            font-size: 25px;
-        }
-        body {
-            background-color: #f3f3f3;
-        }
-        header {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 2px solid #535353;
-            background-color: #f5d2f2;
-        }
-        header h1 {
-            margin-bottom: 10px;
-            font-size: 40px;
-            font-style: normal;
-            color: #000000;
-        }
-        .section {
-            text-align: center;
-            margin: 20px 0;
-            font-style:italic;
-            color: #000000;
-            font-family: "Bad Script", cursive;
-            background-color: #f5d2f2;
-        }
-        .perro_gif{
-            width: 50%;
-            height: 300px;
-        }
-        .texto {
-            font-size: 20px;
-            font-style: italic;
-            padding: 15px; 
-            max-width: 800px;
-            line-height: 30px;
-            margin: 0 auto;
-            font-weight: bold;
-            text-align: center;
-        }
-        .titulo_lista{
-            font-style: normal;
-        }
-        .titulo_principal {
-            font-size: 35px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        footer {
-            background-color: #fff;
-            padding: 50px;
-            font-style: normal;
-            text-align: center;
-            margin-top: 40px;
-            border-top: 2px solid #535353;
-        }
-        .back-link {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: #333;
-            text-decoration: none;
-            font-size: 16px;
-            z-index: 1000;
-        }
-        .back-link:hover {
-            text-decoration: underline;
-        }
-        .donation-content {
-            background: white;
-            margin: 20px;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .donation-item {
-            margin: 20px 0;
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 10px;
-            border-left: 5px solid #f5d2f2;
-        }
-        .donation-item h3 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-        .donation-item p {
-            color: #666;
-            line-height: 1.6;
-        }
-    </style>
-</head>
-<body>
-    <a href="{{ route('home') }}" class="back-link">← Volver al inicio</a>
-    
-    <div class="fundacion">
-        <h1>FUNDACION RESCATA AMOR</h1>
-    </div>
-    
-    <header>
-        <h1 class="titulo_principal">¿Qué puedes donar?</h1>
-        <img src="{{ asset('img/perro-animado.gif') }}" alt="Perro Animado" class="perro_gif">
-    </header>
-    
-    <main>
-        <section class="section">
-            <h2 class="titulo_lista">Formas de ayudar</h2>
-            <p class="texto">Tu generosidad puede cambiar la vida de nuestros peludos. Cada donación, por pequeña que sea, nos ayuda a seguir rescatando, cuidando y encontrando hogares para nuestros amigos de cuatro patas.</p>
-        </section>
-        
-        <div class="donation-content">
-            <div class="donation-item">
-                <h3>💰 Donaciones Monetarias</h3>
-                <p>Las donaciones en efectivo nos permiten cubrir gastos veterinarios, medicamentos, alimentos de calidad y mejorar las instalaciones de nuestros refugios.</p>
-            </div>
-            
-            <div class="donation-item">
-                <h3>🍽️ Alimentos y Snacks</h3>
-                <p>Donaciones de croquetas, comida húmeda, snacks saludables y golosinas para perros y gatos de todas las edades.</p>
-            </div>
-            
-            <div class="donation-item">
-                <h3>🧸 Juguetes y Entretenimiento</h3>
-                <p>Pelotas, cuerdas, juguetes interactivos, rascadores para gatos y cualquier elemento que mantenga a nuestros peludos felices y activos.</p>
-            </div>
-            
-            <div class="donation-item">
-                <h3>🛏️ Accesorios y Cuidado</h3>
-                <p>Camas, mantas, collares, correas, comederos, bebederos, champús, cepillos y productos de higiene para mascotas.</p>
-            </div>
-            
-            <div class="donation-item">
-                <h3>🏥 Suministros Médicos</h3>
-                <p>Medicamentos veterinarios, vendas, gasas, termómetros, jeringas y cualquier material médico que pueda necesitarse.</p>
-            </div>
-            
-            <div class="donation-item">
-                <h3>⏰ Tu Tiempo</h3>
-                <p>Voluntariado para pasear perros, limpiar refugios, ayudar en eventos de adopción o simplemente dar cariño a nuestros peludos.</p>
-            </div>
+@extends('public.layout')
+
+@section('title', '¿Qué puedes donar? - Fundación Rescata Amor')
+
+@section('content')
+<section class="content-section">
+    <div class="hero">
+        <div class="hero-text">
+            <h1>Tu aporte transforma vidas</h1>
+            <p>Cada donación cubre tratamientos, jornadas de rescate y programas de adopción. Puedes apoyarnos con dinero, insumos o regalando tu tiempo.</p>
+            <a href="{{ route('canales-donacion') }}" class="btn btn-primary">Conoce los canales</a>
         </div>
-    </main>
-    
-    <footer>
-        <p>Fundación Rescata Amor © 2024</p>
-        <p>Para más información sobre donaciones, contáctanos en: info@rescataamor.org</p>
-    </footer>
-</body>
-</html>
+        <div class="hero-media">
+            <img src="{{ asset('img/perro-animado.gif') }}" alt="Perro animado">
+        </div>
+    </div>
+</section>
+
+<section class="content-section soft">
+    <h2 class="section-title">Formas de ayudar</h2>
+    <p class="section-subtitle">Prioriza lo que puedas aportar; nosotros lo convertimos en bienestar para nuestros peludos.</p>
+
+    <div class="card-grid">
+        <article class="card">
+            <h3>💰 Donaciones monetarias</h3>
+            <p>Gastos veterinarios, medicamentos, esterilizaciones, mejoras locativas y campañas educativas.</p>
+        </article>
+        <article class="card">
+            <h3>🍽️ Alimentos y snacks</h3>
+            <p>Croquetas, comida húmeda, snacks funcionales, leche deslactosada y suplementos nutricionales.</p>
+        </article>
+        <article class="card">
+            <h3>🧸 Juguetes y recreación</h3>
+            <p>Pelotas, cuerdas, juguetes interactivos, rascadores para gatos y elementos de enriquecimiento ambiental.</p>
+        </article>
+        <article class="card">
+            <h3>🛏️ Descanso y cuidado</h3>
+            <p>Camas lavables, mantas, collares, arneses, comederos, bebederos y kits de higiene.</p>
+        </article>
+        <article class="card">
+            <h3>🏥 Suministros médicos</h3>
+            <p>Medicamentos veterinarios, jeringas, gasas, termómetros, vitaminas y productos de curación.</p>
+        </article>
+        <article class="card">
+            <h3>⏰ Voluntariado</h3>
+            <p>Apoya con paseos, transporte, fotografía, difusión en redes o acompañamiento en eventos.</p>
+        </article>
+    </div>
+
+    <p>¿Quieres coordinar una donación especial? Escríbenos a <strong>info@rescataamor.org</strong>.</p>
+</section>
+
+<section class="content-section">
+    <h2 class="section-title">Consulta tus donaciones</h2>
+    <p class="section-subtitle">
+        Si ya hiciste una donación registrada en el sistema, puedes consultarla ingresando el correo o número de documento
+        que usaste como adoptante.
+    </p>
+
+    <form method="GET" class="card form-card" style="margin-bottom: 2rem;">
+        <div class="form-row">
+            <label for="identificador">Correo o número de documento</label>
+            <input
+                id="identificador"
+                type="text"
+                name="identificador"
+                value="{{ request('identificador') }}"
+                placeholder="Ej: tunombre@correo.com o 123456789"
+            >
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar mis donaciones</button>
+    </form>
+
+    @isset($donacionesUsuario)
+        @if($donacionesUsuario->isEmpty())
+            <p class="state-message">No encontramos donaciones asociadas a ese dato.</p>
+        @else
+            <div class="list-module">
+                @foreach($donacionesUsuario as $donacion)
+                    @php $det = $donacion->detalles->first(); @endphp
+                    <article>
+                        <h3>{{ $donacion->tipo }}</h3>
+                        <p class="text-muted">
+                            {{ $donacion->fecha ? \Carbon\Carbon::parse($donacion->fecha)->format('d/m/Y') : 'Fecha no registrada' }}
+                        </p>
+                        <p>
+                            <strong>Cantidad:</strong>
+                            @if($donacion->tipo === 'Monetaria')
+                                ${{ number_format($donacion->cantidad, 0, ',', '.') }}
+                            @else
+                                {{ $donacion->cantidad }} unidades
+                            @endif
+                        </p>
+                        <p><strong>Descripción:</strong> {{ $det->descripcion_producto ?? 'Sin detalle guardado' }}</p>
+                    </article>
+                @endforeach
+            </div>
+        @endif
+    @endisset
+</section>
+@endsection

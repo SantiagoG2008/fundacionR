@@ -5,6 +5,10 @@ body {
     padding: 20px;
 }
 
+body.sidebar-open {
+    overflow: hidden;
+}
+
 header {
     background-color: #f5d2f2;
     color: rgb(0, 0, 0);
@@ -98,19 +102,47 @@ table td {
     border: 1px solid #dee2e6;
     text-align: left;
     width: 100%;
+    word-break: break-word;
 }
 
 table th {
     background-color: #f1f1f1;
 }
 
+.alert {
+    display: block;
+    padding: 12px 16px;
+    margin: 15px 0;
+    border-radius: 5px;
+    border-left: 5px solid transparent;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
 .alert-success {
     background-color: #d4edda;
     color: #155724;
-    padding: 10px;
-    border-left: 5px solid #28a745;
-    margin-bottom: 15px;
-    border-radius: 5px;
+    border-left-color: #28a745;
+}
+
+.alert-error,
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left-color: #dc3545;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-left-color: #ffc107;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-left-color: #17a2b8;
 }
 
 .btn {
@@ -152,6 +184,7 @@ html, body {
     display: flex;
     min-height: 100vh;
     align-items: stretch;
+    position: relative;
 }
 
 /* Sidebar Responsivo */
@@ -164,6 +197,22 @@ html, body {
     padding: 0;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
+    z-index: 40;
+}
+
+.sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 30;
+}
+
+body.sidebar-open .sidebar-backdrop {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Título del sidebar */
@@ -208,6 +257,53 @@ html, body {
     overflow-x: hidden;
 }
 
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Botón toggle sidebar */
+.sidebar-toggle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid #d4a5d4;
+    background: #fff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar-toggle span,
+.sidebar-toggle span::before,
+.sidebar-toggle span::after {
+    width: 20px;
+    height: 2px;
+    background: #5c3d5c;
+    display: block;
+    content: "";
+    position: relative;
+}
+
+.sidebar-toggle span::before {
+    position: absolute;
+    top: -6px;
+}
+
+.sidebar-toggle span::after {
+    position: absolute;
+    top: 6px;
+}
+
+.sidebar-toggle:focus-visible,
+.sidebar-toggle:hover {
+    background: #f5d2f2;
+    transform: translateY(-1px);
+}
+
 /* Header administrativo */
 .admin-header {
     background: linear-gradient(135deg, #f5d2f2, #e8c5e8);
@@ -222,6 +318,8 @@ html, body {
     align-items: center;
     max-width: 1400px;
     margin: 0 auto;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
 .header-content h1 {
@@ -287,18 +385,32 @@ html, body {
     }
     
     .sidebar {
-        width: 100%;
-        height: auto;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 80%;
+        max-width: 300px;
+        transform: translateX(-100%);
+        padding-bottom: 30px;
+    }
+    
+    body.sidebar-open .sidebar {
+        transform: translateX(0);
     }
     
     .sidebar-header {
         font-size: 20px;
-        padding: 15px;
+        padding: 20px;
     }
     
     .nav-link {
-        padding: 10px 15px;
-        text-align: center;
+        padding: 12px 20px;
+        text-align: left;
+    }
+    
+    .sidebar-toggle {
+        display: inline-flex;
     }
     
     .header-content {
@@ -314,7 +426,37 @@ html, body {
     .content > *:not(.admin-header) {
         padding: 15px 20px;
     }
+    
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    table {
+        font-size: 13px;
+    }
+    
+    table th,
+    table td {
+        padding: 8px;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .sidebar {
+        width: 100%;
+    }
+}
+
 
 /* ESTILOS MODERNOS PARA BOTONES */
 .btn {

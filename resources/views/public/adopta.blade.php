@@ -1,155 +1,168 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adopta - Fundación Rescata Amor</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Noto+Sans+Hebrew:wght@100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Concert+One&family=Noto+Sans+Hebrew:wght@100..900&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        .fundacion{
-            text-align: center;
-            line-height: 1.3;
-            margin-top: 14px;
-            font-family: "Concert One", sans-serif;
-        }
-        .tit2{
-            font-family: "Bad Script", cursive;
-            font-size: 25px;
-        }
-        body {
-            background-color: #f3f3f3;
-        }
-        header {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 2px solid #535353;
-            background-color: #f5d2f2;
-        }
-        header h1 {
-            margin-bottom: 10px;
-            font-size: 40px;
-            font-style: normal;
-            color: #000000;
-        }
-        .section {
-            text-align: center;
-            margin: 20px 0;
-            font-style:italic;
-            color: #000000;
-            font-family: "Bad Script", cursive;
-            background-color: #f5d2f2;
-        }
-        .lista_perros {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .contenedor_perros {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            margin: 15px;
-            padding: 15px;
-            width: 50%;
-            text-align: center;
-            margin: 20px;
-        }
-        .contenedor_perros img {
-            max-width: 30%;
-            border-radius: 10px;
-            object-fit: cover;
-            height: 250px;
-        }
-        .contenedor_perros h3 {
-            font-style: normal;
-            color: #000000;
-            font-size: 30px;
-        }
-        footer {
-            background-color: #fff;
-            padding: 50px;
-            font-style: normal;
-            text-align: center;
-            margin-top: 40px;
-            border-top: 2px solid #535353;
-        }
-        .milo{
-            height: 300px;
-            width: 100%;
-        }
-        .paco{
-            height: 300px;
-            width: 100%;
-        }
-        .perro_gif{
-            width: 50%;
-            height: 300px;
-        }
-        .texto {
-            font-size: 20px;
-            font-style: italic;
-            padding: 15px; 
-            max-width: 800px;
-            line-height: 30px;
-            margin: 0 auto;
-            font-weight: bold;
-            text-align: center;
-        }
-        .titulo_lista{
-            font-style: normal;
-        }
-        .back-link {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: #333;
-            text-decoration: none;
-            font-size: 16px;
-            z-index: 1000;
-        }
-        .back-link:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <a href="{{ route('home') }}" class="back-link">← Volver al inicio</a>
-    
-    <div class="fundacion">
-        <h1>FUNDACION RESCATA AMOR</h1>
-        <h1 class="tit2">El amor cambia vidas</h1>
-    </div>
-   
-    <main>
-        <section class="section">
-            <h2 class="titulo_lista">Lista de peluditos en adopción</h2>
-            <p class="texto">Nuestros peludos están buscando un hogar permanente y lleno de amor. Una vez que hayas encontrado al compañero ideal para adoptar, revisa los requisitos y completa el formulario correspondiente. ¡Estamos ansiosos por ayudarte a encontrar a tu nuevo mejor amigo!</p>
-        </section>
-        <section>
-            <div class="lista_perros">
-                <div class="contenedor_perros">
-                    <img src="{{ asset('img/perro3.jpg') }}" alt="Paco" class="paco">
-                    <h3>Paco - 9 años</h3>
-                    <p>¡Hola! Me llamo Paco y soy un perrito lleno de energía y amor. Tengo un pelaje suavecito y unas orejas grandes que siempre están atentas para escuchar cada palabra que me digas. Lo que más me gusta en el mundo es correr al aire libre, jugar a la pelota y, sobre todo, ¡recibir muchos mimos! Soy muy cariñoso y prometo que si me adoptas, seré tu mejor amigo para siempre. A veces me pongo un poco nervioso con los ruidos fuertes, pero si me das una caricia, me tranquilizo de inmediato. Estoy buscando una familia que quiera compartir aventuras conmigo. ¿Te gustaría ser esa persona especial? ¡Adóptame y hagamos una vida llena de momentos felices juntos!</p>
+@extends('public.layout')
+
+@section('title', 'Adopta - Fundación Rescata Amor')
+
+@section('content')
+<section class="content-section">
+    <h1 class="section-title">Peluditos listos para adoptarse</h1>
+    <p class="section-subtitle">El listado se sincroniza con el panel administrativo para que siempre veas la disponibilidad real.</p>
+    <div class="card-grid">
+        @forelse($mascotas as $mascota)
+            <article class="card profile-card">
+                <img src="{{ $mascota->imagen_url ?? asset('img/perro-animado.gif') }}" alt="Mascota {{ $mascota->nombre_mascota }}">
+                <div>
+                    <h3>{{ $mascota->nombre_mascota }} · {{ $mascota->edad }} años</h3>
+                    <p>{{ $mascota->raza->nombre_raza ?? 'Sin raza' }} · {{ $mascota->estado->descripcion ?? 'Sin estado' }}</p>
+                    <ul class="list-check">
+                        <li>{{ $mascota->genero === 'M' ? 'Macho' : ($mascota->genero === 'F' ? 'Hembra' : $mascota->genero) }}</li>
+                        <li>{{ $mascota->vacunado ? 'Vacunado' : 'Sin vacunas al día' }}</li>
+                        <li>{{ $mascota->esterilizado ? 'Esterilizado' : 'Sin esterilizar' }}</li>
+                    </ul>
+                    <a href="{{ route('contacto', ['mascota' => $mascota->id_mascota]) }}" class="btn btn-primary" style="margin-top:0.75rem; display:inline-block;">
+                        Solicitar adopción
+                    </a>
                 </div>
-                <div class="contenedor_perros">
-                    <img src="{{ asset('img/perro4.jpg') }}" alt="Milo" class="milo">
-                    <h3>Milo - 5 años</h3>
-                    <p>¡Hola, humano! Soy Milo, un gatito con mucha curiosidad y una personalidad única. Me encanta explorar cada rincón de la casa, y cuando termino mis aventuras diarias, busco un lugar cómodo para acurrucarme. Si me adoptas, te prometo muchas horas de ronroneos y compañía. Aunque soy un poquito independiente, siempre estaré cerca para hacerte compañía. Me gusta que me rasquen detrás de las orejas y, de vez en cuando, jugar con una pelota o una cuerda. Si necesitas un amigo que te haga sonreír cada día, aquí estoy yo, esperando encontrar mi hogar ideal. ¿Te animas a conocerme? ¡Yo también quiero una familia a quien amar!</p>
+            </article>
+        @empty
+            <p class="state-message">En este momento no hay mascotas publicadas.</p>
+        @endforelse
+    </div>
+    <div class="state-message" style="background: transparent; color: inherit;">
+        {{ $mascotas->links() }}
+    </div>
+</section>
+
+<section class="content-section soft">
+    <h2 class="section-title">Pasos para adoptar</h2>
+    <div class="card-grid">
+        <article class="card">
+            <h3>1. Conoce y elige</h3>
+            <p>Revisa la información del peludo que te enamoró y agenda una visita para que se conozcan.</p>
+        </article>
+        <article class="card">
+            <h3>2. Postula</h3>
+            <p>Completa el formulario de adopción y cuéntanos sobre tu estilo de vida y hogar.</p>
+        </article>
+        <article class="card">
+            <h3>3. Recibe acompañamiento</h3>
+            <p>Te orientamos con recomendaciones de cuidado y seguimiento post adopción.</p>
+        </article>
+    </div>
+</section>
+
+<section id="mis-solicitudes" class="content-section">
+    <h2 class="section-title">Mis solicitudes de adopción</h2>
+    <p class="section-subtitle">
+        Ingresa el correo o número de documento que usaste al registrarte como adoptante para ver el estado de tus solicitudes.
+    </p>
+
+    <form method="GET" class="card form-card" style="margin-bottom: 2rem;">
+        @error('identificador')
+            <p class="alert alert-danger">{{ $message }}</p>
+        @enderror
+        <div class="form-row">
+            <label for="identificador">Correo o número de documento</label>
+            <input
+                id="identificador"
+                type="text"
+                name="identificador"
+                value="{{ request('identificador') }}"
+                placeholder="Ej: tunombre@correo.com o 123456789"
+            >
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar mis solicitudes</button>
+    </form>
+
+    @isset($adopciones)
+        @if($adopciones && $adopciones->isEmpty())
+            <p class="state-message">No encontramos solicitudes asociadas a ese dato.</p>
+        @elseif($adopciones)
+            <div class="list-module">
+                @foreach($adopciones as $adopcion)
+                    <article class="card profile-card">
+                        <div class="detail-media">
+                            @if($adopcion->mascota && $adopcion->mascota->imagen_url)
+                                <img src="{{ $adopcion->mascota->imagen_url }}" alt="Mascota {{ $adopcion->mascota->nombre_mascota }}">
+                            @else
+                                <img src="{{ asset('img/perro-animado.gif') }}" alt="Mascota">
+                            @endif
+                        </div>
+                        <div>
+                            <h3>{{ $adopcion->mascota->nombre_mascota ?? 'Mascota' }}</h3>
+                            <p class="text-muted">
+                                Fecha de solicitud/adopción:
+                                {{ $adopcion->fecha_adopcion ? \Carbon\Carbon::parse($adopcion->fecha_adopcion)->format('d/m/Y') : 'Pendiente de asignar' }}
+                            </p>
+                            @php
+                                $estado = $adopcion->fecha_adopcion ? 'Aprobada' : 'Pendiente';
+                            @endphp
+                            <p><strong>Estado:</strong> {{ $estado }}</p>
+                            @if($adopcion->observaciones)
+                                <p><strong>Observaciones:</strong> {{ $adopcion->observaciones }}</p>
+                            @endif
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+        @endif
+    @endisset
+</section>
+
+<section id="mi-mascota" class="content-section soft">
+    <h2 class="section-title">Mi mascota adoptada</h2>
+    <p class="section-subtitle">
+        Si ya adoptaste, con el mismo dato anterior puedes ver la ficha y la historia clínica básica de tu mascota.
+    </p>
+
+    @if(isset($lookupAttempted) && $lookupAttempted)
+        @if(!$miMascota)
+            <p class="state-message">No encontramos una mascota asociada a ese dato. Verifica la información o consulta con la fundación.</p>
+        @else
+            <div class="detail-layout">
+                <div class="detail-media">
+                    <img src="{{ $miMascota->imagen_url ?? asset('img/perro-animado.gif') }}" alt="Mascota {{ $miMascota->nombre_mascota }}">
+                </div>
+                <div class="detail-info">
+                    <h3 class="section-title">{{ $miMascota->nombre_mascota }}</h3>
+                    <p class="text-muted">
+                        {{ $miMascota->raza->nombre_raza ?? 'Sin raza registrada' }} ·
+                        {{ $miMascota->edad }} años ·
+                        {{ $miMascota->genero === 'M' ? 'Macho' : ($miMascota->genero === 'F' ? 'Hembra' : $miMascota->genero) }}
+                    </p>
+                    <ul class="list-check" style="margin-top: 1rem;">
+                        <li>{{ $miMascota->vacunado ? 'Vacunado' : 'Sin vacunas al día' }}</li>
+                        <li>{{ $miMascota->esterilizado ? 'Esterilizado' : 'Sin esterilizar' }}</li>
+                        <li>{{ $miMascota->destetado ? 'Destetado' : 'Aún en proceso de destete' }}</li>
+                        <li>{{ $miMascota->peligroso ? 'Requiere manejo especial' : 'No catalogado como peligroso' }}</li>
+                    </ul>
                 </div>
             </div>
-        </section>
-    </main>
-    <footer>
-        <p>Fundación Rescata Amor © 2024</p>
-    </footer>
-</body>
-</html>
+
+            @if(isset($historias) && $historias->isNotEmpty())
+                <div class="content-section">
+                    <h3 class="section-title">Historia clínica</h3>
+                    <div class="list-module">
+                        @foreach($historias as $historia)
+                            <article>
+                                <h4>{{ \Carbon\Carbon::parse($historia->fecha_chequeo)->format('d/m/Y') }}</h4>
+                                <p><strong>Peso:</strong> {{ $historia->peso }} kg</p>
+                                @if($historia->tratamiento)
+                                    <p><strong>Tratamiento:</strong> {{ $historia->tratamiento }}</p>
+                                @endif
+                                @if($historia->observaciones)
+                                    <p><strong>Observaciones:</strong> {{ $historia->observaciones }}</p>
+                                @endif
+                                @if($historia->cuidados)
+                                    <p><strong>Cuidados recomendados:</strong> {{ $historia->cuidados }}</p>
+                                @endif
+                            </article>
+                        @endforeach
+                    </div>
+                </div>
+            @else
+                <p class="state-message">Aún no hay historia clínica registrada para esta mascota.</p>
+            @endif
+        @endif
+    @endif
+</section>
+@endsection

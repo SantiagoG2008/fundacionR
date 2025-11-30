@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+use App\Http\Requests\Auth\LoginRequest;
 
 class AuthController extends Controller
 {
@@ -13,24 +13,18 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+        $credentials = $request->validated();
 
-        // Usar Laravel Auth para autenticación
-        $credentials = $request->only('email', 'password');
-        
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
             return redirect()->route('admin.dashboard')->with('success', 'Bienvenido al panel administrativo');
         }
 
-        return back()->withErrors([
-            'credentials' => 'Las credenciales proporcionadas no son correctas.',
-        ])->withInput($request->only('email'));
+        return back()
+            ->withErrors(['credentials' => 'El correo o la contraseña son incorrectos.'])
+            ->withInput($request->only('email'));
     }
 
     public function logout(Request $request)
