@@ -18,7 +18,7 @@
                 <a href="{{ route('adoptantes.index') }}" class="nav-link">👤 Adoptantes</a>
                 <a href="{{ route('adopciones.index') }}" class="nav-link">📄 Adopciones</a>
                 <a href="{{ route('historia_clinicas.index') }}" class="nav-link">🩺 Historias Clínicas</a>
-                <a href="{{ route('galeria.index') }}" class="nav-link">🖼️ Galería</a>
+                <a href="{{ route('galeria.admin.index') }}" class="nav-link">🖼️ Galería</a>
                 <a href="{{ route('donaciones.index') }}" class="nav-link">🤝 Donaciones</a>
                 <a href="{{ route('contactos.index') }}" class="nav-link">📧 Mensajes</a>
                 <a href="{{ route('informes.index') }}" class="nav-link">📊 Informes</a>

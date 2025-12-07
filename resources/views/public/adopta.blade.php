@@ -3,6 +3,7 @@
 @section('title', 'Adopta - Fundación Rescata Amor')
 
 @section('content')
+@if(request('seccion') !== 'mis-solicitudes' && !request()->filled('identificador'))
 <section class="content-section">
     <h1 class="section-title">Peluditos listos para adoptarse</h1>
     <p class="section-subtitle">El listado se sincroniza con el panel administrativo para que siempre veas la disponibilidad real.</p>
@@ -31,7 +32,9 @@
         {{ $mascotas->links() }}
     </div>
 </section>
+@endif
 
+@if(request('seccion') !== 'mis-solicitudes' && !request()->filled('identificador'))
 <section class="content-section soft">
     <h2 class="section-title">Pasos para adoptar</h2>
     <div class="card-grid">
@@ -49,6 +52,7 @@
         </article>
     </div>
 </section>
+@endif
 
 <section id="mis-solicitudes" class="content-section">
     <h2 class="section-title">Mis solicitudes de adopción</h2>
@@ -106,63 +110,5 @@
             </div>
         @endif
     @endisset
-</section>
-
-<section id="mi-mascota" class="content-section soft">
-    <h2 class="section-title">Mi mascota adoptada</h2>
-    <p class="section-subtitle">
-        Si ya adoptaste, con el mismo dato anterior puedes ver la ficha y la historia clínica básica de tu mascota.
-    </p>
-
-    @if(isset($lookupAttempted) && $lookupAttempted)
-        @if(!$miMascota)
-            <p class="state-message">No encontramos una mascota asociada a ese dato. Verifica la información o consulta con la fundación.</p>
-        @else
-            <div class="detail-layout">
-                <div class="detail-media">
-                    <img src="{{ $miMascota->imagen_url ?? asset('img/perro-animado.gif') }}" alt="Mascota {{ $miMascota->nombre_mascota }}">
-                </div>
-                <div class="detail-info">
-                    <h3 class="section-title">{{ $miMascota->nombre_mascota }}</h3>
-                    <p class="text-muted">
-                        {{ $miMascota->raza->nombre_raza ?? 'Sin raza registrada' }} ·
-                        {{ $miMascota->edad }} años ·
-                        {{ $miMascota->genero === 'M' ? 'Macho' : ($miMascota->genero === 'F' ? 'Hembra' : $miMascota->genero) }}
-                    </p>
-                    <ul class="list-check" style="margin-top: 1rem;">
-                        <li>{{ $miMascota->vacunado ? 'Vacunado' : 'Sin vacunas al día' }}</li>
-                        <li>{{ $miMascota->esterilizado ? 'Esterilizado' : 'Sin esterilizar' }}</li>
-                        <li>{{ $miMascota->destetado ? 'Destetado' : 'Aún en proceso de destete' }}</li>
-                        <li>{{ $miMascota->peligroso ? 'Requiere manejo especial' : 'No catalogado como peligroso' }}</li>
-                    </ul>
-                </div>
-            </div>
-
-            @if(isset($historias) && $historias->isNotEmpty())
-                <div class="content-section">
-                    <h3 class="section-title">Historia clínica</h3>
-                    <div class="list-module">
-                        @foreach($historias as $historia)
-                            <article>
-                                <h4>{{ \Carbon\Carbon::parse($historia->fecha_chequeo)->format('d/m/Y') }}</h4>
-                                <p><strong>Peso:</strong> {{ $historia->peso }} kg</p>
-                                @if($historia->tratamiento)
-                                    <p><strong>Tratamiento:</strong> {{ $historia->tratamiento }}</p>
-                                @endif
-                                @if($historia->observaciones)
-                                    <p><strong>Observaciones:</strong> {{ $historia->observaciones }}</p>
-                                @endif
-                                @if($historia->cuidados)
-                                    <p><strong>Cuidados recomendados:</strong> {{ $historia->cuidados }}</p>
-                                @endif
-                            </article>
-                        @endforeach
-                    </div>
-                </div>
-            @else
-                <p class="state-message">Aún no hay historia clínica registrada para esta mascota.</p>
-            @endif
-        @endif
-    @endif
 </section>
 @endsection

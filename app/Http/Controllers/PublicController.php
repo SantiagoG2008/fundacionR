@@ -149,6 +149,15 @@ class PublicController extends Controller
         return view('public.canales-donacion');
     }
 
+    public function galeria()
+    {
+        $galeria = Galeria::with('mascota')
+            ->latest('id_imagen')
+            ->get();
+
+        return view('public.galeria', compact('galeria'));
+    }
+
     private function findAdoptanteByIdentifier(?string $identifier): ?Adoptante
     {
         if (!filled($identifier)) {

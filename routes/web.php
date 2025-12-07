@@ -24,6 +24,7 @@ Route::get('/voluntarios', [PublicController::class, 'voluntarios'])->name('volu
 Route::get('/padrinos', [PublicController::class, 'padrinos'])->name('padrinos');
 Route::get('/casos-especiales', [PublicController::class, 'casosEspeciales'])->name('casos-especiales');
 Route::get('/canales-donacion', [PublicController::class, 'canalesDonacion'])->name('canales-donacion');
+Route::get('/galeria', [PublicController::class, 'galeria'])->name('galeria');
 
 // Rutas de autenticación
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -38,7 +39,8 @@ Route::middleware(['simple.auth'])->group(function () {
     
     Route::resource('mascotas', MascotaController::class);
     Route::resource('historia_clinicas', HistoriaClinicaController::class); 
-    Route::resource('galeria', GaleriaController::class);
+    Route::get('/galeria/admin', [GaleriaController::class, 'index'])->name('galeria.admin.index');
+    Route::resource('galeria', GaleriaController::class)->except(['index', 'show']);
     Route::resource('adopciones', AdopcionController::class)->parameters(['adopciones' => 'adopcion']);
     Route::resource('adoptantes', AdoptanteController::class);
     Route::resource('donaciones', DonacionesController::class)->parameters(['donaciones' => 'donacion']);

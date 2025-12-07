@@ -49,7 +49,7 @@ public function index()
         'ruta'       => $rutaImagen,
     ]);
 
-    return redirect()->route('galeria.index')->with('success', 'Imagen registrada correctamente.');
+    return redirect()->route('galeria.admin.index')->with('success', 'Imagen registrada correctamente.');
 }
 
 
@@ -86,14 +86,14 @@ public function index()
 
     $imagen->update($datos);
 
-    return redirect()->route('galeria.index')->with('success', 'Registro actualizado.');
+    return redirect()->route('galeria.admin.index')->with('success', 'Registro actualizado.');
 }
 public function destroy($id)
 {
     $imagen = Galeria::findOrFail($id);
     $imagen->delete();
 
-    return redirect()->route('galeria.index')->with('success', 'Imagen eliminada correctamente.');
+    return redirect()->route('galeria.admin.index')->with('success', 'Imagen eliminada correctamente.');
 }
 
 

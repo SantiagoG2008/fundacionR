@@ -60,49 +60,6 @@
     </div>
 </section>
 
-<section class="content-section">
-    <h2 class="section-title">Peluditos destacados</h2>
-    <p class="section-subtitle">Estos son algunos de los animales que actualmente buscan familia. La información proviene directamente del panel administrativo.</p>
-    <div class="card-grid">
-        @forelse($mascotas as $mascota)
-            <article class="card profile-card">
-                <img src="{{ $mascota->imagen_url ?? asset('img/perro-animado.gif') }}" alt="Mascota {{ $mascota->nombre_mascota }}">
-                <div>
-                    <h3>{{ $mascota->nombre_mascota }} · {{ $mascota->edad }} años</h3>
-                    <p>{{ $mascota->raza->nombre_raza ?? 'Sin raza' }} · {{ $mascota->estado->descripcion ?? 'Sin estado' }}</p>
-                    <ul class="list-check">
-                        <li>{{ $mascota->genero === 'M' ? 'Macho' : ($mascota->genero === 'F' ? 'Hembra' : $mascota->genero) }}</li>
-                        <li>{{ $mascota->vacunado ? 'Vacunado' : 'Sin vacunas al día' }}</li>
-                        <li>{{ $mascota->esterilizado ? 'Esterilizado' : 'Sin esterilizar' }}</li>
-                    </ul>
-                </div>
-            </article>
-        @empty
-            <p class="state-message">Todavía no hay mascotas cargadas en el sistema.</p>
-        @endforelse
-    </div>
-</section>
-
-<section id="galeria" class="content-section soft">
-    <h2 class="section-title">Galería</h2>
-    <p class="section-subtitle">Algunas imágenes de nuestras jornadas, rescates y adopciones.</p>
-    <div class="card-grid">
-        @forelse($galeria as $imagen)
-            <article class="card">
-                <img src="{{ $imagen->ruta_url }}" alt="{{ $imagen->nombre }}">
-                <div>
-                    <h3>{{ $imagen->nombre }}</h3>
-                    @if($imagen->mascota)
-                        <p class="text-muted">Mascota: {{ $imagen->mascota->nombre_mascota }}</p>
-                    @endif
-                </div>
-            </article>
-        @empty
-            <p class="state-message">Todavía no hay imágenes cargadas en la galería.</p>
-        @endforelse
-    </div>
-</section>
-
 <section class="content-section soft">
     <h2 class="section-title">Últimas novedades</h2>
     <div class="responsive-duo">
