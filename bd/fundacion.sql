@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-09-2025 a las 02:15:51
+-- Tiempo de generación: 09-12-2025 a las 00:21:34
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -28,22 +28,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `adopciones` (
-  `id_adopcion` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_adopcion` bigint(20) UNSIGNED NOT NULL,
   `id_mascota` bigint(20) UNSIGNED NOT NULL,
   `id_adoptante` bigint(20) UNSIGNED NOT NULL,
   `fecha_adopcion` date DEFAULT NULL,
   `observaciones` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-  ,PRIMARY KEY (`id_adopcion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `adopciones`
---
-
-INSERT INTO `adopciones` (`id_adopcion`, `id_mascota`, `id_adoptante`, `fecha_adopcion`, `observaciones`, `created_at`, `updated_at`) VALUES
-(2, 2, 3, '2025-07-11', 'oijgkegj', '2025-07-11 23:10:00', '2025-07-11 23:10:16');
 
 -- --------------------------------------------------------
 
@@ -52,7 +44,7 @@ INSERT INTO `adopciones` (`id_adopcion`, `id_mascota`, `id_adoptante`, `fecha_ad
 --
 
 CREATE TABLE `adoptantes` (
-  `id_adoptante` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_adoptante` bigint(20) UNSIGNED NOT NULL,
   `nombres` varchar(255) NOT NULL,
   `telefono` varchar(255) DEFAULT NULL,
   `direccion` varchar(255) DEFAULT NULL,
@@ -66,7 +58,6 @@ CREATE TABLE `adoptantes` (
   `rol` varchar(255) NOT NULL DEFAULT 'usuario',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-  ,PRIMARY KEY (`id_adoptante`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -74,8 +65,40 @@ CREATE TABLE `adoptantes` (
 --
 
 INSERT INTO `adoptantes` (`id_adoptante`, `nombres`, `telefono`, `direccion`, `edad`, `nro_docum`, `id_tipo`, `correo`, `sexo`, `id_localidad`, `id_barrio`, `rol`, `created_at`, `updated_at`) VALUES
-(1, 'Santiago Godoy', '3053468635', 'cra130#143a13', 21, '1001119500', 1, 'castillogodoysantiago@gmail.com', 'M', 15, 1, 'ambos', NULL, NULL),
-(3, 'Ginna', '3052302520', 'cra143#130a13', 22, '1001119600', 1, 'ginna@gmail.com', 'F', 15, 1, 'donante', NULL, NULL);
+(3, 'Santiago', '3162813166', 'Tv 69c #68b sur 55 barrio: el ensueño, casa grande. Manzana 8, casa 98', 55, '7777', 1, 'ginnatique@gmail.com', 'M', 18, 3, 'adoptante', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `auditoria`
+--
+
+CREATE TABLE `auditoria` (
+  `id_auditoria` bigint(20) UNSIGNED NOT NULL,
+  `modulo` varchar(100) NOT NULL,
+  `tabla` varchar(100) NOT NULL,
+  `registro_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `accion` varchar(20) NOT NULL,
+  `usuario` varchar(100) DEFAULT NULL,
+  `valores_anteriores` text DEFAULT NULL,
+  `valores_nuevos` text DEFAULT NULL,
+  `ip` varchar(45) DEFAULT NULL,
+  `user_agent` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `auditoria`
+--
+
+INSERT INTO `auditoria` (`id_auditoria`, `modulo`, `tabla`, `registro_id`, `accion`, `usuario`, `valores_anteriores`, `valores_nuevos`, `ip`, `user_agent`, `created_at`, `updated_at`) VALUES
+(1, 'Historias Clínicas', 'historia_clinica', 1, 'deleted', 'admin@rescataamor.com', '{\n    \"id_historia\": 1,\n    \"id_mascota\": 3,\n    \"fecha_chequeo\": \"2025-09-28\",\n    \"peso\": 22,\n    \"tratamiento\": \"ss\",\n    \"observaciones\": \"ss\",\n    \"cuidados\": \"ss\",\n    \"created_at\": \"2025-09-28T02:10:17.000000Z\",\n    \"updated_at\": \"2025-12-07T19:56:42.000000Z\"\n}', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-08 04:58:57', '2025-12-08 04:58:57'),
+(2, 'Mascotas', 'mascota', 3, 'updated', 'admin@rescataamor.com', '{\n    \"id_mascota\": 3,\n    \"nombre_mascota\": \"sss\",\n    \"edad\": 2,\n    \"vacunado\": 0,\n    \"peligroso\": 1,\n    \"esterilizado\": 1,\n    \"destetado\": 1,\n    \"genero\": \"Hembra\",\n    \"imagen\": \"imagenes\\/KXiwmETysLhieUYkrNXKli0L3l5hEV6avXY0l1j1.jpg\",\n    \"crianza\": 1,\n    \"fecha_ingreso\": \"2025-12-07\",\n    \"condiciones_especiales\": 0,\n    \"raza_id\": 7,\n    \"condicion_id\": null,\n    \"estado_id\": 1\n}', '{\n    \"edad\": \"5\",\n    \"vacunado\": false,\n    \"peligroso\": true,\n    \"esterilizado\": true,\n    \"destetado\": true,\n    \"crianza\": true\n}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-08 04:59:57', '2025-12-08 04:59:57'),
+(3, 'Mascotas', 'mascota', 4, 'created', 'admin@rescataamor.com', NULL, '{\n    \"nombre_mascota\": \"Sol\",\n    \"edad\": \"2\",\n    \"vacunado\": true,\n    \"peligroso\": true,\n    \"esterilizado\": true,\n    \"destetado\": true,\n    \"genero\": \"Hembra\",\n    \"imagen\": \"imagenes\\/gILtor2yTlqx8oVJa9269QEt95r5b8V67owlEA7s.jpg\",\n    \"crianza\": true,\n    \"fecha_ingreso\": \"2025-12-08\",\n    \"estado_id\": \"1\",\n    \"raza_id\": 7,\n    \"condicion_id\": null,\n    \"condiciones_especiales\": 0,\n    \"id_mascota\": 4\n}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-08 05:04:22', '2025-12-08 05:04:22'),
+(4, 'Mascotas', 'mascota', 5, 'created', 'admin@rescataamor.com', NULL, '{\n    \"nombre_mascota\": \"rocky\",\n    \"edad\": \"12\",\n    \"vacunado\": true,\n    \"peligroso\": true,\n    \"esterilizado\": true,\n    \"destetado\": true,\n    \"genero\": \"Macho\",\n    \"imagen\": \"imagenes\\/KdHiC14hS7qzSh6KWfvo2UILhNNTm2n2Ucs3V8GJ.jpg\",\n    \"crianza\": true,\n    \"fecha_ingreso\": \"2025-12-08\",\n    \"estado_id\": \"1\",\n    \"raza_id\": 7,\n    \"condicion_id\": null,\n    \"condiciones_especiales\": 0,\n    \"id_mascota\": 5\n}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-08 05:28:18', '2025-12-08 05:28:18'),
+(5, 'Galería', 'imagenes', 3, 'created', 'admin@rescataamor.com', NULL, '{\n    \"id_mascota\": \"4\",\n    \"nombre\": \"tobi\",\n    \"ruta\": \"imagenes\\/1765153805_images.jpg\",\n    \"updated_at\": \"2025-12-08 00:30:05\",\n    \"created_at\": \"2025-12-08 00:30:05\",\n    \"id_imagen\": 3\n}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-08 05:30:05', '2025-12-08 05:30:05'),
+(6, 'Mascotas', 'mascota', 4, 'deleted', 'admin@rescataamor.com', '{\n    \"id_mascota\": 4,\n    \"nombre_mascota\": \"Sol\",\n    \"edad\": 2,\n    \"vacunado\": 1,\n    \"peligroso\": 1,\n    \"esterilizado\": 1,\n    \"destetado\": 1,\n    \"genero\": \"Hembra\",\n    \"imagen\": \"imagenes\\/gILtor2yTlqx8oVJa9269QEt95r5b8V67owlEA7s.jpg\",\n    \"crianza\": 1,\n    \"fecha_ingreso\": \"2025-12-08\",\n    \"condiciones_especiales\": 0,\n    \"raza_id\": 7,\n    \"condicion_id\": null,\n    \"estado_id\": 1\n}', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-09 04:11:46', '2025-12-09 04:11:46');
 
 -- --------------------------------------------------------
 
@@ -84,12 +107,11 @@ INSERT INTO `adoptantes` (`id_adoptante`, `nombres`, `telefono`, `direccion`, `e
 --
 
 CREATE TABLE `barrio` (
-  `id_barrio` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_barrio` bigint(20) UNSIGNED NOT NULL,
   `nombre_barrio` varchar(100) NOT NULL,
   `id_localidad` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-  ,PRIMARY KEY (`id_barrio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -98,9 +120,8 @@ CREATE TABLE `barrio` (
 
 INSERT INTO `barrio` (`id_barrio`, `nombre_barrio`, `id_localidad`, `created_at`, `updated_at`) VALUES
 (1, 'Bilbao', 15, NULL, NULL),
-(2, 'Madelena', 19, NULL, NULL),
-(3, 'bilbao', 4, NULL, NULL),
-(4, 'bilbao', 19, NULL, NULL);
+(2, 'gdg', 16, NULL, NULL),
+(3, 'el ensueño', 18, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -109,7 +130,7 @@ INSERT INTO `barrio` (`id_barrio`, `nombre_barrio`, `id_localidad`, `created_at`
 --
 
 CREATE TABLE `contactos` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `asunto` varchar(255) NOT NULL,
@@ -117,7 +138,6 @@ CREATE TABLE `contactos` (
   `leido` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-  ,PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -125,8 +145,7 @@ CREATE TABLE `contactos` (
 --
 
 INSERT INTO `contactos` (`id`, `nombre`, `email`, `asunto`, `mensaje`, `leido`, `created_at`, `updated_at`) VALUES
-(1, 'Santy', 'castillogodoysantiago@gmail.com', 'hola', 'hola', 1, '2025-09-14 22:43:34', '2025-09-14 22:43:54'),
-(2, 'asdada', 'asdada@czczc', 'dadad', 'dsdfdsf', 1, '2025-09-14 23:02:27', '2025-09-14 23:02:58');
+(1, 'Santy', 'castillogodoysantiago@gmail.com', 'hola', 'dadassds', 0, '2025-09-28 07:12:09', '2025-09-28 07:12:09');
 
 -- --------------------------------------------------------
 
@@ -135,9 +154,8 @@ INSERT INTO `contactos` (`id`, `nombre`, `email`, `asunto`, `mensaje`, `leido`, 
 --
 
 CREATE TABLE `detalle_condicion` (
-  `id_condicion` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_condicion` bigint(20) UNSIGNED NOT NULL,
   `descripcion` varchar(150) NOT NULL
-  ,PRIMARY KEY (`id_condicion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -155,21 +173,12 @@ INSERT INTO `detalle_condicion` (`id_condicion`, `descripcion`) VALUES
 --
 
 CREATE TABLE `detalle_donacion` (
-  `id_detalle` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_detalle` bigint(20) UNSIGNED NOT NULL,
   `id_donacion` bigint(20) UNSIGNED NOT NULL,
   `descripcion_producto` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-  ,PRIMARY KEY (`id_detalle`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `detalle_donacion`
---
-
-INSERT INTO `detalle_donacion` (`id_detalle`, `id_donacion`, `descripcion_producto`, `created_at`, `updated_at`) VALUES
-(5, 3, 'por daviplata', '2025-07-12 01:12:37', '2025-07-12 01:12:37'),
-(6, 1, 'nada', '2025-07-12 01:12:48', '2025-07-12 01:12:48');
 
 -- --------------------------------------------------------
 
@@ -178,23 +187,14 @@ INSERT INTO `detalle_donacion` (`id_detalle`, `id_donacion`, `descripcion_produc
 --
 
 CREATE TABLE `donaciones` (
-  `id_donacion` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_donacion` bigint(20) UNSIGNED NOT NULL,
   `tipo` varchar(255) NOT NULL,
   `cantidad` decimal(10,2) DEFAULT NULL,
   `fecha` date NOT NULL,
   `id_adoptante` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-  ,PRIMARY KEY (`id_donacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `donaciones`
---
-
-INSERT INTO `donaciones` (`id_donacion`, `tipo`, `cantidad`, `fecha`, `id_adoptante`, `created_at`, `updated_at`) VALUES
-(1, 'Comida', 2.00, '2025-07-01', 3, '2025-07-02 05:49:46', '2025-07-12 01:12:48'),
-(3, 'Dinero', 1000000.00, '2025-07-11', 1, '2025-07-12 01:12:04', '2025-07-12 01:12:37');
 
 -- --------------------------------------------------------
 
@@ -254,14 +254,6 @@ CREATE TABLE `historia_clinica` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `historia_clinica`
---
-
-INSERT INTO `historia_clinica` (`id_historia`, `id_mascota`, `fecha_chequeo`, `peso`, `tratamiento`, `observaciones`, `cuidados`, `created_at`, `updated_at`) VALUES
-(1, 1, '2025-07-01', 70.00, 'ninguno', 'nada', 'nada', '2025-07-02 05:48:29', '2025-07-02 05:48:29'),
-(3, 2, '2025-07-17', 22.00, 'nada', 'nada', 'nada', '2025-07-12 01:06:41', '2025-07-12 01:07:13');
-
 -- --------------------------------------------------------
 
 --
@@ -276,13 +268,6 @@ CREATE TABLE `imagenes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `imagenes`
---
-
-INSERT INTO `imagenes` (`id_imagen`, `id_mascota`, `nombre`, `ruta`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Paco', 'storage/imagenes/1752204120_Captura de pantalla 2025-06-25 201818.png', '2025-07-02 05:48:48', '2025-07-11 08:22:00');
 
 -- --------------------------------------------------------
 
@@ -352,8 +337,8 @@ CREATE TABLE `mascota` (
 --
 
 INSERT INTO `mascota` (`id_mascota`, `nombre_mascota`, `edad`, `vacunado`, `peligroso`, `esterilizado`, `destetado`, `genero`, `imagen`, `crianza`, `fecha_ingreso`, `condiciones_especiales`, `raza_id`, `condicion_id`, `estado_id`) VALUES
-(1, 'Paco', 9, 1, 1, 1, 1, 'Macho', 'imagenes/H1a0SfhvRo2XDKQ5TPFKfVTN2BH5I03KBDTNCFVj.png', 0, '2025-07-01', 1, 5, 16, 6),
-(2, 'Milo', 4, 0, 0, 1, 0, 'Macho', 'imagenes/TqOiljc1yHuEDGioIDErKwBXZKGgiWb8687HpofY.jpg', 1, '2025-07-11', 1, 5, 19, 6);
+(3, 'sss', 5, 0, 1, 1, 1, 'Hembra', 'imagenes/KXiwmETysLhieUYkrNXKli0L3l5hEV6avXY0l1j1.jpg', 1, '2025-12-07', 0, 7, NULL, 1),
+(5, 'rocky', 12, 1, 1, 1, 1, 'Macho', 'imagenes/KdHiC14hS7qzSh6KWfvo2UILhNNTm2n2Ucs3V8GJ.jpg', 1, '2025-12-08', 0, 7, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -392,7 +377,30 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (18, '2025_06_07_000013_create_detalle_donacion_table', 1),
 (19, '2025_06_22_215148_remove_presentacion_id_from_detalle_donacion_table', 1),
 (20, '2025_06_22_215527_drop_presentacion_table', 1),
-(21, '2025_09_14_172456_create_contactos_table', 2);
+(21, '2025_09_14_172456_create_contactos_table', 1),
+(22, '2025_09_28_000001_create_auditoria_table', 2),
+(23, '2025_12_08_002327_create_panel_config_table', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `panel_config`
+--
+
+CREATE TABLE `panel_config` (
+  `id_config` bigint(20) UNSIGNED NOT NULL,
+  `clave` varchar(50) NOT NULL,
+  `valor` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `panel_config`
+--
+
+INSERT INTO `panel_config` (`id_config`, `clave`, `valor`, `created_at`, `updated_at`) VALUES
+(1, 'panel_activo', 1, '2025-12-08 05:24:26', '2025-12-09 04:08:12');
 
 -- --------------------------------------------------------
 
@@ -441,6 +449,8 @@ CREATE TABLE `razas` (
 
 INSERT INTO `razas` (`id_raza`, `nombre_raza`) VALUES
 (5, 'cocker'),
+(7, 'Coker'),
+(6, 'criollo'),
 (3, 'Fold'),
 (4, 'Golden'),
 (1, 'Koker');
@@ -486,6 +496,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Administrador', 'admin@rescataamor.com', NULL, '$2y$10$nSGKkJPJPEZYdp91keGHQ.BNbBW8Ws07kfFdLQmTsJt/K.QSo06pa', NULL, '2025-09-28 08:57:47', '2025-09-28 08:58:20');
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -506,6 +523,16 @@ ALTER TABLE `adoptantes`
   ADD KEY `adoptantes_id_tipo_foreign` (`id_tipo`),
   ADD KEY `adoptantes_id_localidad_foreign` (`id_localidad`),
   ADD KEY `adoptantes_id_barrio_foreign` (`id_barrio`);
+
+--
+-- Indices de la tabla `auditoria`
+--
+ALTER TABLE `auditoria`
+  ADD PRIMARY KEY (`id_auditoria`),
+  ADD KEY `auditoria_modulo_tabla_index` (`modulo`,`tabla`),
+  ADD KEY `auditoria_registro_id_index` (`registro_id`),
+  ADD KEY `auditoria_accion_index` (`accion`),
+  ADD KEY `auditoria_created_at_index` (`created_at`);
 
 --
 -- Indices de la tabla `barrio`
@@ -589,6 +616,13 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `panel_config`
+--
+ALTER TABLE `panel_config`
+  ADD PRIMARY KEY (`id_config`),
+  ADD UNIQUE KEY `panel_config_clave_unique` (`clave`);
+
+--
 -- Indices de la tabla `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -630,43 +664,49 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `adopciones`
 --
 ALTER TABLE `adopciones`
-  MODIFY `id_adopcion` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_adopcion` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `adoptantes`
 --
 ALTER TABLE `adoptantes`
-  MODIFY `id_adoptante` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_adoptante` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `auditoria`
+--
+ALTER TABLE `auditoria`
+  MODIFY `id_auditoria` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `barrio`
 --
 ALTER TABLE `barrio`
-  MODIFY `id_barrio` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_barrio` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `contactos`
 --
 ALTER TABLE `contactos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_condicion`
 --
 ALTER TABLE `detalle_condicion`
-  MODIFY `id_condicion` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_condicion` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_donacion`
 --
 ALTER TABLE `detalle_donacion`
-  MODIFY `id_detalle` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_detalle` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `donaciones`
 --
 ALTER TABLE `donaciones`
-  MODIFY `id_donacion` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_donacion` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `estados`
@@ -684,7 +724,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `historia_clinica`
 --
 ALTER TABLE `historia_clinica`
-  MODIFY `id_historia` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_historia` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `imagenes`
@@ -708,7 +748,13 @@ ALTER TABLE `mascota`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT de la tabla `panel_config`
+--
+ALTER TABLE `panel_config`
+  MODIFY `id_config` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `personal_access_tokens`
@@ -720,7 +766,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT de la tabla `razas`
 --
 ALTER TABLE `razas`
-  MODIFY `id_raza` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_raza` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_docum`
@@ -732,7 +778,7 @@ ALTER TABLE `tipo_docum`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
