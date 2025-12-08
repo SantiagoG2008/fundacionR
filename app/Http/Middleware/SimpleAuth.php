@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\PanelConfig;
 
 class SimpleAuth
 {
@@ -17,6 +18,10 @@ class SimpleAuth
      */
     public function handle(Request $request, Closure $next)
     {
+        if (!PanelConfig::isPanelActive()) {
+            abort(403, 'El panel administrativo está desactivado');
+        }
+
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Debes iniciar sesión para acceder a esta área');
         }

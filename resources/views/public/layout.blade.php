@@ -30,7 +30,17 @@
                 <li><a href="{{ route('donar') }}">Donaciones</a></li>
                 <li><a href="{{ route('contacto') }}">Contacto</a></li>
                 <li><a href="{{ url('/adopta?seccion=mis-solicitudes#mis-solicitudes') }}">Mis solicitudes</a></li>
-                <li><a href="{{ route('login') }}">Panel administrador</a></li>
+                @php
+                    $panelActivo = \App\Models\PanelConfig::isPanelActive();
+                    $isAuthenticated = \Illuminate\Support\Facades\Auth::check();
+                @endphp
+                @if($panelActivo)
+                <li>
+                    <a href="{{ $isAuthenticated ? route('admin.dashboard') : route('login') }}">
+                        Panel administrador
+                    </a>
+                </li>
+                @endif
             </ul>
         </nav>
     </header>
@@ -53,6 +63,39 @@
             const isOpen = siteNav.classList.toggle('is-open');
             navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         });
+
+        // Atajo de teclado para activar/desactivar panel: Ctrl+Shift+P
+        let keysPressed = {};
+        document.addEventListener('keydown', function(e) {
+            keysPressed[e.key] = true;
+            
+            if (keysPressed['Control'] && keysPressed['Shift'] && e.key === 'P') {
+                e.preventDefault();
+                togglePanel();
+            }
+        });
+
+        document.addEventListener('keyup', function(e) {
+            delete keysPressed[e.key];
+        });
+
+        function togglePanel() {
+            fetch('{{ route("panel.toggle") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ key: 'ctrl_shift_p' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
     </script>
     @stack('scripts')
 </body>

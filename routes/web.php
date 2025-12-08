@@ -10,6 +10,8 @@ use App\Http\Controllers\InformeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\AuditoriaController;
+use App\Http\Controllers\PanelToggleController;
 use App\Http\Controllers\Auth\ManualPasswordResetController;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,6 +27,10 @@ Route::get('/padrinos', [PublicController::class, 'padrinos'])->name('padrinos')
 Route::get('/casos-especiales', [PublicController::class, 'casosEspeciales'])->name('casos-especiales');
 Route::get('/canales-donacion', [PublicController::class, 'canalesDonacion'])->name('canales-donacion');
 Route::get('/galeria', [PublicController::class, 'galeria'])->name('galeria');
+
+// Ruta para toggle del panel (solo con atajo de teclado)
+Route::post('/api/panel/toggle', [PanelToggleController::class, 'toggle'])->name('panel.toggle');
+Route::get('/api/panel/status', [PanelToggleController::class, 'status'])->name('panel.status');
 
 // Rutas de autenticación
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -53,6 +59,9 @@ Route::middleware(['simple.auth'])->group(function () {
     Route::get('/informes/donaciones/pdf', [InformeController::class, 'donacionesPDF'])->name('donaciones.pdf');
     Route::get('/informes/adopciones/pdf', [InformeController::class, 'adopcionesPDF'])->name('adopciones.pdf');
     Route::get('/informes/historias/pdf', [InformeController::class, 'historiasPDF'])->name('historia_clinica.pdf');
+
+    // Auditoría
+    Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
 });
 
 // Fallback para servir archivos del disco 'public' cuando el symlink falla (Windows/rutas con espacios)

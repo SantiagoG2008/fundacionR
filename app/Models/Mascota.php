@@ -9,9 +9,11 @@ use App\Models\Raza;
 use App\Models\Estado;
 use App\Models\DetalleCondicion;
 use App\Models\HistoriaClinica;
+use App\Traits\Auditable;
 
 class Mascota extends Model
 {
+    use Auditable;
     protected $table = 'mascota';
     protected $primaryKey = 'id_mascota';
     public $timestamps = false;

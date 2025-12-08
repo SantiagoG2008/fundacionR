@@ -5,11 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\PanelConfig;
 
 class AuthController extends Controller
 {
     public function showLogin()
     {
+        if (!PanelConfig::isPanelActive()) {
+            abort(403, 'El panel administrativo está desactivado');
+        }
+
+        if (Auth::check()) {
+            return redirect()->route('admin.dashboard');
+        }
         return view('auth.login');
     }
 

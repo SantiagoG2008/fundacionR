@@ -22,6 +22,7 @@
                 <a href="{{ route('donaciones.index') }}" class="nav-link">🤝 Donaciones</a>
                 <a href="{{ route('contactos.index') }}" class="nav-link">📧 Mensajes</a>
                 <a href="{{ route('informes.index') }}" class="nav-link">📊 Informes</a>
+                <a href="{{ route('auditoria.index') }}" class="nav-link">📋 Auditoría</a>
             </nav>
         </aside>
 

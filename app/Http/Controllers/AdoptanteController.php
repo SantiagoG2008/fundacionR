@@ -26,7 +26,11 @@ class AdoptanteController extends Controller
 
     public function store(Request $request)
     {
-        $messages = ['nro_docum.unique' => 'El número de documento ya está registrado.',];
+        $messages = [
+            'nro_docum.unique' => 'El número de documento ya está registrado.',
+            'acepta_politica.required' => 'Debe aceptar la política de tratamiento de datos personales para continuar.',
+            'acepta_politica.accepted' => 'Debe aceptar la política de tratamiento de datos personales para continuar.',
+        ];
         $data = $request->validate([
             'nombres' => 'required|string|max:100',
             'telefono' => 'nullable|string|max:20',
@@ -39,6 +43,7 @@ class AdoptanteController extends Controller
             'id_localidad' => 'required|exists:localidad_usu,id_localidad',
             'barrio_viv' => 'required|string|max:100',
             'rol' => 'required|in:adoptante,donante,ambos',
+            'acepta_politica' => 'required|accepted',
         ], $messages);
 
         $barrio = Barrio::firstOrCreate([

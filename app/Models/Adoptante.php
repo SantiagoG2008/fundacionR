@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Auditable;
 
 class Adoptante extends Model
 {
+    use Auditable;
     protected $table = 'adoptantes';
     protected $primaryKey = 'id_adoptante';
     public $timestamps = false;

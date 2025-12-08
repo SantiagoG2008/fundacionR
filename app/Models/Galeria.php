@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Models\Mascota;
+use App\Traits\Auditable;
 
 class Galeria extends Model
 {
-    use HasFactory;
+    use HasFactory, Auditable;
 
     protected $table = 'imagenes';
     protected $primaryKey = 'id_imagen'; 

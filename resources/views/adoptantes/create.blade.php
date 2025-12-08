@@ -144,6 +144,27 @@
                 </div>
             </div>
 
+            <!-- Política de Datos -->
+            <div class="form-group" style="margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; border: 1px solid #dee2e6;">
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <input type="checkbox" name="acepta_politica" id="acepta_politica" value="1" 
+                           {{ old('acepta_politica') ? 'checked' : '' }} required
+                           style="margin-top: 5px; width: 20px; height: 20px; cursor: pointer;">
+                    <label for="acepta_politica" style="cursor: pointer; flex: 1; margin: 0;">
+                        <strong>Acepto la política de tratamiento de datos personales *</strong>
+                        <br>
+                        <small style="color: #6c757d; line-height: 1.5;">
+                            Autorizo a la Fundación Rescata Amor para el tratamiento de mis datos personales de acuerdo con la Ley 1581 de 2012 y el Decreto 1377 de 2013. 
+                            Mis datos serán utilizados exclusivamente para los fines relacionados con el proceso de adopción, donación y comunicación institucional. 
+                            Puedo ejercer mis derechos de conocer, actualizar, rectificar y suprimir mis datos personales en cualquier momento.
+                        </small>
+                    </label>
+                </div>
+                @error('acepta_politica')
+                    <div class="text-danger mt-2">{{ $message }}</div>
+                @enderror
+            </div>
+
             <!-- Botones -->
             <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
                 <button type="submit" class="btn btn-success btn-lg">
